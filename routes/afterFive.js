@@ -20,5 +20,11 @@ router.post("/after5", (req, res, next) => {
     })
     .catch(err => next(err));
 });
+router.post("/deleteIdea/:id", (req, res, next) => {
+  Ideas.findByIdAndRemove(req.params.id, function(err) {
+    if (err) return next(err);
+    res.send("Deleted successfully!");
+  });
+});
 
 module.exports = router;
