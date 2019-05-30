@@ -90,4 +90,6 @@ app.use("/", index);
 const authRoutes = require("./routes/auth-routes");
 app.use("/api", authRoutes);
 
+app.use("/api", require("./routes/afterFive"));
+
 module.exports = app;
