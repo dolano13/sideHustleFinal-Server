@@ -32,7 +32,7 @@ const ideas = [
       "https://www.amazon.com/Start-Your-Clothing-Store-More/dp/1599183951/ref=as_li_ss_tl?ie=UTF8&linkCode=ll1&tag=entaff-20&linkId=7bf42cf6e4c078e122fddf63fb1a0331"
   },
   {
-    ideas: "Consignment Shop",
+    ideas: "Freelance Writer",
     desc:
       "Freelance writers can write articles on any topic, from horse training to buying an RV. A good way to start is by writing about subjects in which you are already an expert. The Writer's Market lists guidelines for thousands of publications.Ghost writing is a good pursuit for freelancers looking for money and willing to forgo a byline. Websites are always on the lookout for quality freelancers, too. Create a website to promote your freelance writing business.vTIP: Your initial queries are likely to get rejected many times. Cultivate a stoic resilience to rejection.",
     url:
