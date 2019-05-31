@@ -94,11 +94,6 @@ app.use(
   })
 );
 
-// For any other routes, redirect to the index.html file of React
-app.get("*", (req, res) => {
-  res.sendFile(path.join(__dirname, "../client/build/index.html"));
-});
-
 const index = require("./routes/index");
 app.use("/", index);
 
