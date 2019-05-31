@@ -92,4 +92,6 @@ app.use("/api", authRoutes);
 
 app.use("/api", require("./routes/afterFive"));
 
+app.use("/api", require("./routes/dashboard"));
+
 module.exports = app;
