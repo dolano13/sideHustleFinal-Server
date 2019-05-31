@@ -54,7 +54,8 @@ router.post("/remove/todo/:todoId", (req, res, next) => {
     .catch(err => res.status(400).json(err));
 });
 
-router.post("/add/todo", (req, res, next) => {
+//router.post("/add/todo", (req, res, next) => {
+router.post("/dashboard", (req, res, next) => {
   console.log("the info for the todo list >>>>>>>> ", req.body);
   Todo.create(req.body)
     .then(newTodo => {
