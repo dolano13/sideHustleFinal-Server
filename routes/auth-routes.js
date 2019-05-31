@@ -8,6 +8,7 @@ const bcrypt = require("bcryptjs");
 const User = require("../models/User");
 
 authRoutes.post("/signup", (req, res, next) => {
+  console.log(req.body, "_+_+_+_+_+_+_++_+");
   const username = req.body.username;
   const password = req.body.password;
 
@@ -103,6 +104,7 @@ authRoutes.post("/logout", (req, res, next) => {
 });
 
 authRoutes.get("/loggedin", (req, res, next) => {
+  console.log("innnnnnn logged in?????");
   // req.isAuthenticated() is defined by passport
   if (req.isAuthenticated()) {
     res.status(200).json(req.user);

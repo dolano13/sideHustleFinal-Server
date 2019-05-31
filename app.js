@@ -86,8 +86,8 @@ app.locals.title = "Express - Generated with IronGenerator";
 // Set "Access-Control-Allow-Origin" header
 app.use(
   cors({
-    origin: (origin, cb) => {
-      cb(null, origin && origin.startsWith("http://localhost:"));
+    origin: function(origin, callback) {
+      return callback(null, true);
     },
     optionsSuccessStatus: 200,
     credentials: true
