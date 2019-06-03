@@ -8,7 +8,7 @@ const bcrypt = require("bcryptjs");
 const User = require("../models/User");
 
 authRoutes.post("/signup", (req, res, next) => {
-  console.log(req.body, "_+_+_+_+_+_+_++_+ ", process.env);
+  // console.log(req.body, "_+_+_+_+_+_+_++_+ ", process.env);
   const username = req.body.username;
   const password = req.body.password;
 
@@ -70,7 +70,7 @@ authRoutes.post("/signup", (req, res, next) => {
 });
 
 authRoutes.post("/login", (req, res, next) => {
-  console.log("Attempting to log in user -------------- ", process.env);
+  // console.log("Attempting to log in user -------------- ", req.user);
   passport.authenticate("local", (err, theUser, failureDetails) => {
     if (err) {
       res
@@ -92,7 +92,10 @@ authRoutes.post("/login", (req, res, next) => {
         res.status(500).json({ message: "Session save went bad." });
         return;
       }
-
+      console.log(
+        "Attempting to log in user -------------- ",
+        req.session.passport.user
+      );
       // We are now logged in (that's why we can also send req.user)
       res.status(200).json(theUser);
     });
