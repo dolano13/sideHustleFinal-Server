@@ -54,17 +54,18 @@ router.post("/remove/todo/:todoId", (req, res, next) => {
     .catch(err => res.status(400).json(err));
 });
 
-//router.post("/add/todo", (req, res, next) => {
-router.post("/dashboard", (req, res, next) => {
+// res.json({
+//   success: true,
+//   newTodo
+// });
+
+router.post("/add/todo", (req, res, next) => {
+  // router.post("/dashboard", (req, res, next) => {
   console.log("the info for the todo list >>>>>>>> ", req.body);
   Todo.create(req.body)
     .then(newTodo => {
-      res.json({
-        success: true,
-        newTodo
-      });
+      console.log("newwwwwtodooo", newTodo, " ------ user ------- ", req.user);
       req.user.todoList.push(newTodo._id);
-      console.log("newwwwwtodooo", newTodo);
       req.user
         .save()
         .then(updatedUser => {

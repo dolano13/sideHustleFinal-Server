@@ -76,23 +76,23 @@ app.use(passport.session());
 app.locals.title = "Express - Generated with IronGenerator";
 
 // ADD CORS SETTINGS HERE TO ALLOW CROSS-ORIGIN INTERACTION:
-// app.use(
-//   cors({
-//     credentials: true,
-//     origin: ["http://localhost:3000"]
-//   })
-// );
-// ROUTES MIDDLEWARE STARTS HERE:
-// Set "Access-Control-Allow-Origin" header
 app.use(
   cors({
-    origin: function(origin, callback) {
-      return callback(null, true);
-    },
-    optionsSuccessStatus: 200,
-    credentials: true
+    credentials: true,
+    origin: ["http://localhost:3000"]
   })
 );
+// ROUTES MIDDLEWARE STARTS HERE:
+// Set "Access-Control-Allow-Origin" header
+// app.use(
+//   cors({
+//     origin: function(origin, callback) {
+//       return callback(null, true);
+//     },
+//     optionsSuccessStatus: 200,
+//     credentials: true
+//   })
+// );
 
 const index = require("./routes/index");
 app.use("/", index);
