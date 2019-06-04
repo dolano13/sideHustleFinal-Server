@@ -8,13 +8,13 @@ const cors = require("cors");
 const mongoose = require("mongoose");
 const logger = require("morgan");
 const path = require("path");
-
 // WHEN INTRODUCING USERS DO THIS:
 // INSTALL THESE DEPENDENCIES: passport-local, passport, bcryptjs, express-session
 // AND UN-COMMENT OUT FOLLOWING LINES:
 
 const session = require("express-session");
 const passport = require("passport");
+const MongoStore = require("connect-mongo")(session);
 
 require("./configs/passport");
 
@@ -64,7 +64,8 @@ app.use(
   session({
     secret: "some secret goes here",
     resave: true,
-    saveUninitialized: true
+    saveUninitialized: true,
+    store: new MongoStore({ mongooseConnection: mongoose.connection })
   })
 );
 
@@ -72,16 +73,21 @@ app.use(
 app.use(passport.initialize());
 app.use(passport.session());
 
+app.use((req, res, next) => {
+  console.log("the req user in the app js ----------------- ", req.user);
+  next();
+});
+
 // default value for title local
 app.locals.title = "Express - Generated with IronGenerator";
 
-// ADD CORS SETTINGS HERE TO ALLOW CROSS-ORIGIN INTERACTION:
 app.use(
   cors({
     credentials: true,
     origin: ["http://localhost:3000"]
   })
 );
+// ADD CORS SETTINGS HERE TO ALLOW CROSS-ORIGIN INTERACTION:
 // ROUTES MIDDLEWARE STARTS HERE:
 // Set "Access-Control-Allow-Origin" header
 // app.use(

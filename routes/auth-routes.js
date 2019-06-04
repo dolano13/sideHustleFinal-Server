@@ -8,7 +8,7 @@ const bcrypt = require("bcryptjs");
 const User = require("../models/User");
 
 authRoutes.post("/signup", (req, res, next) => {
-  // console.log(req.body, "_+_+_+_+_+_+_++_+ ", process.env);
+  console.log(req.body, "_+_+_+_+_+_+_++_+ ", process.env.MONGODB_URI);
   const username = req.body.username;
   const password = req.body.password;
 
@@ -97,6 +97,7 @@ authRoutes.post("/login", (req, res, next) => {
         req.session.passport.user
       );
       // We are now logged in (that's why we can also send req.user)
+      console.log("the user info with req >>>>>>>>>>>>>> ", req.user);
       res.status(200).json(theUser);
     });
   })(req, res, next);
@@ -109,9 +110,10 @@ authRoutes.post("/logout", (req, res, next) => {
 });
 
 authRoutes.get("/loggedin", (req, res, next) => {
-  console.log("innnnnnn logged in?????");
+  console.log("innnnnnn logged in???????????????????????????/", req.session);
   // req.isAuthenticated() is defined by passport
   if (req.isAuthenticated()) {
+    // res.session.user = req.user;
     res.status(200).json(req.user);
     return;
   }

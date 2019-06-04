@@ -65,7 +65,7 @@ router.post("/add/todo", (req, res, next) => {
   Todo.create(req.body)
     .then(newTodo => {
       console.log("newwwwwtodooo", newTodo);
-      console.log(" ------ user ------- ", req);
+      console.log(" ------ user ------- ", req.user);
       req.user.todoList.push(newTodo._id);
       req.user
         .save()
