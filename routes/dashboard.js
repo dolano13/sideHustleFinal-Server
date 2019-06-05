@@ -2,6 +2,7 @@ const express = require("express");
 const router = express.Router();
 const Business = require("../models/BusinessPlan");
 const Todo = require("../models/TodoList");
+const User = require("../models/User");
 
 router.get("/getPlan", (req, res, next) => {
   Business.findById(req.user.businessPlan)
@@ -65,20 +66,36 @@ router.post("/add/todo", (req, res, next) => {
   Todo.create(req.body)
     .then(newTodo => {
       console.log("newwwwwtodooo", newTodo);
-      console.log(" ------ user ------- ", req.user);
-      req.user.todoList.push(newTodo._id);
-      req.user
-        .save()
-        .then(updatedUser => {
-          console.log(
-            "updated user after adding todo list >>>>>>>>>> ",
-            updatedUser
-          );
-          res.status(200).json(newTodo);
+      console.log(" ------ user ------- ", req.body.theUser._id);
+      User.findById(req.body.theUser._id)
+        .then(theUser => {
+          theUser.todoList.push(newTodo._id);
+          theUser
+            .save()
+            .then(updatedUser => {
+              console.log(
+                "updated user after adding todo list >>>>>>>>>> ",
+                updatedUser
+              );
+              res.status(200).json(newTodo);
+            })
+            .catch(err => {
+              console.log(
+                "error saving the info to user >>>>>>>>>>>>>>>>>>> ",
+                err
+              );
+              res.status(400).json(err);
+            });
         })
-        .catch(err => res.status(400).json(err));
+        .catch(err => {
+          console.log("error looking for user ---------- ", err);
+          res.status(400).json(err);
+        });
     })
-    .catch(err => res.status(400).json(err));
+    .catch(err => {
+      console.log("error creating to do .................... ", err);
+      res.status(400).json(err);
+    });
 });
 
 router.post("/update/todo/:todoId", (req, res, next) => {

@@ -86,20 +86,38 @@ authRoutes.post("/login", (req, res, next) => {
       return;
     }
 
-    // save user in session
-    req.login(theUser, err => {
-      if (err) {
-        res.status(500).json({ message: "Session save went bad." });
-        return;
-      }
-      console.log(
-        "Attempting to log in user -------------- ",
-        req.session.passport.user
-      );
-      // We are now logged in (that's why we can also send req.user)
-      console.log("the user info with req >>>>>>>>>>>>>> ", req.user);
-      res.status(200).json(theUser);
-    });
+    User.findById(theUser._id)
+      .populate("todoList")
+      .then(theUserWithTodo => {
+        console.log(
+          "the user --- ",
+          theUser,
+          "the req user also ############## ",
+          req.user
+        );
+        console.log("the Error >>>>>> ", err);
+        console.log("error details ======== ", failureDetails);
+
+        // save user in session
+        req.login(theUser, err => {
+          if (err) {
+            res.status(500).json({ message: "Session save went bad." });
+            return;
+          }
+          console.log(
+            "Attempting to log in user -------------- ",
+            req.session.passport.user
+          );
+          // We are now logged in (that's why we can also send req.user)
+          console.log(
+            "this is the user before req user ===================== ",
+            theUser
+          );
+          console.log("the user info with req >>>>>>>>>>>>>> ", req.user);
+          res.status(200).json(theUserWithTodo);
+        });
+      })
+      .catch(err => res.status(500).json(err));
   })(req, res, next);
 });
 
@@ -114,8 +132,13 @@ authRoutes.get("/loggedin", (req, res, next) => {
   // req.isAuthenticated() is defined by passport
   if (req.isAuthenticated()) {
     // res.session.user = req.user;
-    res.status(200).json(req.user);
-    return;
+    User.findById(req.user._id)
+      .populate("todoList")
+      .then(theUserWithTodo => {
+        res.status(200).json(theUserWithTodo);
+        return;
+      })
+      .catch(err => res.status(500).json(err));
   }
   res.status(403).json({ message: "Unauthorized" });
 });
